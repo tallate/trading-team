@@ -1,0 +1,4 @@
+interface:
+  display_name: "Equity Research Committee"
+  short_description: "Institutional equity research and portfolio decisions"
+  default_prompt: "Use $trading-team to conduct an institutional equity review with specialist subagents and an investment-committee decision."
