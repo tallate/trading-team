@@ -20,6 +20,11 @@ class ProtocolValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             MODULE.validate_role_map(role_map)
 
+    def test_accepts_debate_mode(self):
+        role_map = MODULE.load_json("role-map.json")
+        self.assertEqual(role_map["execution"]["mode"], "debate_dag")
+        MODULE.validate_role_map(role_map)
+
 
 if __name__ == "__main__":
     unittest.main()

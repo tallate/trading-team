@@ -17,6 +17,7 @@ Use a framework-agnostic team model. Treat roles as responsibilities, not framew
 
 - Default to real subagents for non-trivial stock decisions.
 - Confirm multi-agent tools are available. Spawn bounded research subagents for independent mandates, then synthesize as Investment Committee Chair.
+- For a buy/hold/sell judgment, prefer an explicit debate pattern: one bullish thesis agent, one bearish thesis agent, then a chair synthesis step.
 - Respect the active concurrency limit. Start as many independent lanes as fit, then reuse completed agents with follow-up tasks for remaining lanes.
 - Use single-agent lanes only when subagent tools are unavailable, the user explicitly asks for a quick answer, or the task is too small to justify fanout. State that fallback.
 - Use current-data tools available in the environment and disclose important missing data.
@@ -31,7 +32,7 @@ For a normal stock hold/buy/sell decision, assign these independent lanes:
 2. Technical & Market Structure Analyst
 3. Macro & Sector Strategist
 4. Positioning & Ownership Analyst
-5. Investment Thesis Review Panel
+5. Investment Thesis Debate Pair
 
 Keep Universe & Risk Screening and Investment Committee Chair responsibilities in the main agent unless the universe is large. For a large universe, assign a Universe & Risk Screening Analyst first to normalize and cluster it.
 
@@ -44,7 +45,7 @@ When the agent tool accepts a task name, use these stable identifiers:
 | Technical & Market Structure Analyst | `market_structure` |
 | Macro & Sector Strategist | `macro_sector` |
 | Positioning & Ownership Analyst | `positioning_ownership` |
-| Investment Thesis Review Panel | `thesis_review` |
+| Investment Thesis Debate Pair | `thesis_review` |
 
 Give every subagent the exact ticker/company, market, investor horizon, position information or explicit assumptions, and available source facts. Ask it to use current source-backed data when available and return only:
 
@@ -116,7 +117,7 @@ Use these questions for a single-stock decision:
 | Technical & Market Structure Analyst | Is the market structure favorable for holding, accumulating, reducing, or waiting? |
 | Macro & Sector Strategist | Do policy, rates, FX, commodities, sector cycle, and market regime support the thesis? |
 | Positioning & Ownership Analyst | Do ownership, buybacks, insider/institutional activity, short interest, or liquidity change risk/reward? |
-| Investment Thesis Review Panel | What are the strongest supporting and opposing cases, and what evidence would invalidate each? |
+| Investment Thesis Debate Pair | What are the strongest supporting and opposing cases, what would each side rebut, and what evidence would invalidate each? |
 
 ## Investment review workflow
 
@@ -125,7 +126,7 @@ Use these questions for a single-stock decision:
 3. Pull current market facts when web, finance, filings, or local data tools are available.
 4. Launch independent specialist subagents within the concurrency limit.
 5. Score each stock across fundamentals, valuation, technicals, macro/theme, and risk.
-6. Run Investment Thesis Review on high-conviction or controversial names.
+6. Run Investment Thesis Debate on high-conviction or controversial names.
 7. Group stocks into `Core Allocation`, `Accumulate on Weakness`, `Watchlist`, `Reduce Exposure`, `Underweight/Avoid`, or `Insufficient Evidence`.
 8. Give portfolio-level guidance on sizing, concentration, sector overlap, risk controls, review triggers, and near-term catalysts.
 

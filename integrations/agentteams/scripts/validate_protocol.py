@@ -27,9 +27,15 @@ def validate_role_map(data: dict) -> None:
     required = {"team_leader", "fundamental_equity", "market_structure", "macro_sector", "positioning_ownership", "thesis_bull", "thesis_bear", "investment_committee_chair"}
     require(required <= role_ids, "role map is missing a required committee responsibility")
     execution = data.get("execution", {})
-    require(execution.get("mode") == "dag", "committee execution mode must be dag")
+    require(execution.get("mode") in {"dag", "debate_dag"}, "committee execution mode must be dag or debate_dag")
     require(set(execution.get("parallel_wave", [])) <= role_ids, "parallel wave refers to unknown role")
-    require(set(execution.get("review_wave", [])) <= role_ids, "review wave refers to unknown role")
+    if "review_wave" in execution:
+        require(set(execution.get("review_wave", [])) <= role_ids, "review wave refers to unknown role")
+    debate_rounds = execution.get("debate_rounds", [])
+    require(isinstance(debate_rounds, list), "debate rounds must be a list when present")
+    for round_spec in debate_rounds:
+        require(isinstance(round_spec, dict), "each debate round must be an object")
+        require(set(round_spec.get("participants", [])) <= role_ids, "debate round refers to unknown role")
     require(execution.get("final_owner") == "investment_committee_chair", "chair must own final memo")
 
 

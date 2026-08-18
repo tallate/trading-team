@@ -17,10 +17,21 @@
     {"id": "investment_committee_chair", "title": "Investment Committee Chair", "owns": ["decision_memo", "sizing", "risk_controls"]}
   ],
   "execution": {
-    "mode": "dag",
+    "mode": "debate_dag",
     "parallel_wave": ["fundamental_equity", "market_structure", "macro_sector", "positioning_ownership"],
-    "review_wave": ["thesis_bull", "thesis_bear"],
-    "optional_referee_when": "reviewers materially disagree or the requested action is Core Allocation",
+    "debate_rounds": [
+      {
+        "name": "initial_positions",
+        "participants": ["thesis_bull", "thesis_bear"],
+        "goal": "Each side argues its case from the evidence packets without converging on a final recommendation."
+      },
+      {
+        "name": "rebuttal",
+        "participants": ["thesis_bull", "thesis_bear"],
+        "goal": "Each side directly challenges the other side's strongest point and updates its confidence."
+      }
+    ],
+    "optional_referee_when": "debate remains materially split or the requested action is Core Allocation",
     "final_owner": "investment_committee_chair"
   }
 }

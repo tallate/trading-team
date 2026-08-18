@@ -12,6 +12,14 @@
 | Mandate | Accepted conclusion | Evidence packet |
 | --- | --- | --- |
 
+## Debate summary
+
+- Bull opening:
+- Bear opening:
+- Bull rebuttal:
+- Bear rebuttal:
+- Chair synthesis:
+
 ## Decision
 
 - Action: `<Core Allocation | Accumulate on Weakness | Watchlist | Reduce Exposure | Underweight/Avoid | Insufficient Evidence>`
