@@ -1,0 +1,26 @@
+{
+  "$schema": "./schemas/role-map.schema.json",
+  "protocol_version": "1.0",
+  "team_name": "equity-research-committee",
+  "manager_contract": {
+    "routes_to": "team_leader",
+    "final_decision_owner": "investment_committee_chair"
+  },
+  "roles": [
+    {"id": "team_leader", "title": "Investment Research Team Leader", "owns": ["project_dag", "task_acceptance", "manager_report"]},
+    {"id": "fundamental_equity", "title": "Fundamental Equity Analyst", "owns": ["business_quality", "financials", "valuation"]},
+    {"id": "market_structure", "title": "Technical & Market Structure Analyst", "owns": ["trend", "liquidity", "entry_risk"]},
+    {"id": "macro_sector", "title": "Macro & Sector Strategist", "owns": ["regime", "sector_cycle", "policy"]},
+    {"id": "positioning_ownership", "title": "Positioning & Ownership Analyst", "owns": ["ownership", "flows", "crowding"]},
+    {"id": "thesis_bull", "title": "Constructive Thesis Reviewer", "owns": ["upside_case", "catalysts"]},
+    {"id": "thesis_bear", "title": "Skeptical Thesis Reviewer", "owns": ["downside_case", "invalidation"]},
+    {"id": "investment_committee_chair", "title": "Investment Committee Chair", "owns": ["decision_memo", "sizing", "risk_controls"]}
+  ],
+  "execution": {
+    "mode": "dag",
+    "parallel_wave": ["fundamental_equity", "market_structure", "macro_sector", "positioning_ownership"],
+    "review_wave": ["thesis_bull", "thesis_bear"],
+    "optional_referee_when": "reviewers materially disagree or the requested action is Core Allocation",
+    "final_owner": "investment_committee_chair"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["protocol_version", "team_name", "manager_contract", "roles", "execution"],
+  "properties": {
+    "protocol_version": {"const": "1.0"},
+    "team_name": {"type": "string", "minLength": 1},
+    "manager_contract": {"type": "object", "required": ["routes_to", "final_decision_owner"]},
+    "roles": {"type": "array", "minItems": 3},
+    "execution": {"type": "object", "required": ["mode", "parallel_wave", "review_wave", "final_owner"]}
+  }
+}

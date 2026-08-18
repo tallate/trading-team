@@ -1,0 +1,10 @@
+{
+  "packet_type": "research_brief",
+  "protocol_version": "1.0",
+  "security": "EXAMPLE.XX",
+  "horizon": "3-12 months",
+  "mandate": "fundamental_equity",
+  "evidence_cutoff": "2026-08-19",
+  "permitted_sources": ["issuer filings", "exchange announcements"],
+  "question": "Assess whether the supplied primary sources support a durable earnings thesis."
+}
