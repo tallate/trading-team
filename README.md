@@ -88,6 +88,28 @@ sequenceDiagram
     Lead-->>Lead: 形成 Investment Committee Decision
 ```
 
+## 数据与存储流
+
+```mermaid
+flowchart LR
+    U[用户问题 / 股票池 / 持仓截图] --> P0[主 agent 输入上下文]
+    P0 --> R1[独立研究子 agent]
+    R1 --> P1[研究结论 / evidence packets]
+    P1 --> B1[Bull 子 agent]
+    P1 --> B2[Bear 子 agent]
+    B1 --> PB[辩论包 / thesis packet]
+    B2 --> PB
+    PB --> C1[Chair synthesis]
+    C1 --> M[委员会备忘录]
+    M --> O[最终决策输出]
+
+    P1 -. evidence only .-> S[(Task workspace / conversation context)]
+    PB -. rebuttal state .-> S
+    M -. final memo .-> S
+```
+
+在本地对话模式里，`evidence packet`、`thesis packet` 和最终结论主要通过子 agent 上下文来传递；在 AgentTeams 模式里，这些内容会被显式写进 task workspace、packet 文件和最终 memo，便于审计和复核。
+
 执行器会尊重当前并发上限：优先并行独立研究任务，并在槽位不足时分批复用已完成的 agent，而不是退化成伪造的“多角色独白”。
 
 ## 专业角色与运行标识
@@ -190,4 +212,3 @@ trading-team/
 ## Disclaimer
 
 Trading Team is an analytical workflow, not a broker, fiduciary, or licensed financial adviser. Outputs may be incomplete, delayed, or incorrect. Verify material facts independently and make investment decisions according to your own objectives, constraints, and risk tolerance.
-

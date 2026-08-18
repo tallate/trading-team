@@ -30,7 +30,39 @@ Use `manager-skill/` for the Team Leader and `worker-skill/` for each research W
 3. Give the Manager a request containing ticker, venue, horizon, portfolio context, permitted data sources, and a decision deadline.
 4. Let the Team Leader run the DAG described by `manager-skill/SKILL.md`; task assignment and state must remain AgentTeams taskflow-owned.
 5. During thesis review, route the `thesis_bull` and `thesis_bear` roles as a live debate pair so each side responds to the other's strongest argument before the chair decides.
-5. Verify the final `decision-memo.md` includes evidence dates, information gaps, risks, and the non-advice disclaimer.
+6. Verify the final `decision-memo.md` includes evidence dates, information gaps, risks, and the non-advice disclaimer.
+
+## AgentTeams data flow
+
+```mermaid
+flowchart TB
+    M[Manager request] --> TL[Team Leader]
+    TL --> PI[Project input<br/>role-map.json + templates]
+    TL --> TW1[Worker task workspace]
+    TL --> TW2[Worker task workspace]
+    TL --> TW3[Worker task workspace]
+    TL --> TW4[Worker task workspace]
+
+    TW1 --> EP1[evidence-packet.md]
+    TW2 --> EP2[evidence-packet.md]
+    TW3 --> EP3[evidence-packet.md]
+    TW4 --> EP4[evidence-packet.md]
+
+    EP1 --> DB[debate packets / rebuttals]
+    EP2 --> DB
+    EP3 --> DB
+    EP4 --> DB
+
+    DB --> CH[Investment Committee Chair]
+    CH --> DM[decision-memo.md]
+    DM --> M
+
+    TW1 -. taskflow state .-> TS[(AgentTeams taskflow / project state)]
+    DB -. shared packet paths .-> TS
+    DM -. accepted memo .-> TS
+```
+
+The shared state is intentionally file- and taskflow-oriented, not hard-coded to one backend. In practice, AgentTeams may persist those packets in its own project storage, while the committee logic only depends on the packet paths and acceptance rules.
 
 The adapter intentionally does not include Matrix identifiers, credentials, MinIO bucket paths, container commands, or a Kubernetes manifest. AgentTeams creates and owns those environment-specific details.
 
